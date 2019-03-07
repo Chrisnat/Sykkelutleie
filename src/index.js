@@ -22,7 +22,7 @@ class Menu extends Component {
 
 class Home extends Component {
   render() {
-    return <Card title="Welcome">Welcome to WhiteBoard</Card>;
+    return <Card title="Ut på tur?">Lei sykkel for en fantastisk tur på Rallarvegen her!</Card>;
   }
 }
 
