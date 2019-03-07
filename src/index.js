@@ -13,7 +13,7 @@ const history = createHashHistory(); // Use history.push(...) to programmaticall
 class Menu extends Component {
   render() {
     return (
-      <NavBar brand="WhiteBoard">
+      <NavBar brand="AS Sykkelutleie">
         <NavBar.Link to="/students">Students</NavBar.Link>
       </NavBar>
     );
