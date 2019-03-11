@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import ReactDOM from 'react-dom';
 import { NavLink, HashRouter, Route } from 'react-router-dom';
-import { bikeService } from './services';
+import { Bike, bikeService } from './services';
 import { Card, List, Row, Column, NavBar, Button, Form } from './widgets';
 
 import createHashHistory from 'history/createHashHistory';
@@ -50,32 +50,37 @@ class BikeList extends Component {
   }
 }
 
-// class BikeDetails extends Component<{ match: { params: { id: number } } }> {
-//   bike = new Student();
-//
-//   render() {
-//     return (
-//       <div>
-//         <Card title="Student details">
-//           <Row>
-//             <Column width={2}>Name:</Column>
-//             <Column>{this.student.name}</Column>
-//           </Row>
-//           <Row>
-//             <Column width={2}>Email:</Column>
-//             <Column>{this.student.email}</Column>
-//           </Row>
-//         </Card>
-//         <Button.Light onClick={this.edit}>Edit</Button.Light>
-//       </div>
-//     );
-//   }
-//
-//   mounted() {
-//     studentService.getStudent(this.props.match.params.id, student => {
-//       this.student = student;
-//     });
-//   }
+class BikeDetails extends Component<{ match: { params: { serienr: number } } }> {
+  bike = new Bike();
+
+  render() {
+    return (
+      <div>
+        <Card title="Sykkelinfo">
+          <Row>
+            <Column width={2}>Navn:</Column>
+            <Column>{this.bike.modellnavn}</Column>
+          </Row>
+          <Row>
+            <Column width={2}>Type:</Column>
+            <Column>{this.bike.type}</Column>
+          </Row>
+          <Row>
+            <Column width={2}>Sted:</Column>
+            <Column>{this.bike.sted_id}</Column>
+          </Row>
+        </Card>
+        <Button.Light onClick={this.edit}>Edit</Button.Light>
+      </div>
+    );
+  }
+
+  mounted() {
+    bikeService.getBike(this.props.match.params.serienr, bike => {
+      this.bike = bike;
+    });
+  }
+}
 //
 //   edit() {
 //     history.push('/students/' + this.student.id + '/edit');
@@ -132,6 +137,7 @@ if (root)
           <Menu />
           <Route exact path="/" component={Home} />
           <Route exact path="/bikes" component={BikeList} />
+          <Route exact path="/bikes/:serienr" component={BikeDetails} />
         </div>
       </HashRouter>
     </div>,

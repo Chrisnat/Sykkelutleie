@@ -1,8 +1,15 @@
 import { connection } from './mysql_connection';
 
+export class Bike {
+  serienr: number;
+  modellnavn: string = '';
+  type: string = '';
+  sted_id: number;
+}
+
 class BikeService {
-  getBikes(success) {
-    connection.query('select * from Sykkel', (error, results) => {
+  getBikes(success: (Bike[]) => mixed) {
+    connection.query('select * from Sykkel', (error: ?Error, results: Bike[]) => {
       if (error) return console.error(error);
 
       success(results);
