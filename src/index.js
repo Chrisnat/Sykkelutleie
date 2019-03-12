@@ -7,6 +7,7 @@ import { NavLink, HashRouter, Route } from 'react-router-dom';
 import { Bike, bikeService } from './services';
 import { Card, List, Row, Column, NavBar, Button, Form } from './widgets';
 import { CustomerList, CustomerDetails } from './kundeliste';
+import { EqptList, EqptDetails } from './utstyr';
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
@@ -17,6 +18,7 @@ class Menu extends Component {
       <NavBar brand="AS Sykkelutleie">
         <NavBar.Link to="/bikes">Sykler</NavBar.Link>
         <NavBar.Link to="/customers">Kunder</NavBar.Link>
+        <NavBar.Link to="/eqpts">Utstyr</NavBar.Link>
       </NavBar>
     );
   }
@@ -83,52 +85,6 @@ class BikeDetails extends Component<{ match: { params: { serienr: number } } }> 
     });
   }
 }
-//
-//   edit() {
-//     history.push('/students/' + this.student.id + '/edit');
-//   }
-// }
-//
-// class StudentEdit extends Component<{ match: { params: { id: number } } }> {
-//   student = new Student();
-//
-//   render() {
-//     return (
-//       <div>
-//         <Card title="Edit student">
-//           <Form.Label>Name:</Form.Label>
-//           <Form.Input type="text" value={this.student.name} onChange={e => (this.student.name = e.target.value)} />
-//           <Form.Label>Email:</Form.Label>
-//           <Form.Input type="text" value={this.student.email} onChange={e => (this.student.email = e.target.value)} />
-//         </Card>
-//         <Row>
-//           <Column>
-//             <Button.Success onClick={this.save}>Save</Button.Success>
-//           </Column>
-//           <Column right>
-//             <Button.Light onClick={this.cancel}>Cancel</Button.Light>
-//           </Column>
-//         </Row>
-//       </div>
-//     );
-//   }
-//
-//   mounted() {
-//     studentService.getStudent(this.props.match.params.id, student => {
-//       this.student = student;
-//     });
-//   }
-//
-//   save() {
-//     studentService.updateStudent(this.student, () => {
-//       history.push('/students/' + this.props.match.params.id);
-//     });
-//   }
-//
-//   cancel() {
-//     history.push('/students/' + this.props.match.params.id);
-//   }
-// }
 
 let root = document.getElementById('root');
 if (root)
@@ -142,6 +98,8 @@ if (root)
           <Route exact path="/bikes/:serienr" component={BikeDetails} />
           <Route exact path="/customers" component={CustomerList} />
           <Route exact path="/customers/:kunde_id" component={CustomerDetails} />
+          <Route exact path="/eqpts" component={EqptList} />
+          <Route exact path="/eqpts/:utstyr_id" component={EqptDetails} />
         </div>
       </HashRouter>
     </div>,

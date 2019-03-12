@@ -1,5 +1,7 @@
 import { connection } from './mysql_connection';
 
+//Klasser og metoder for Sykler
+
 export class Bike {
   serienr: number;
   modellnavn: string = '';
@@ -16,18 +18,16 @@ class BikeService {
     });
   }
 
-  getBike(serienr, success) {
-    connection.query(
-      'SELECT * FROM Sykkel JOIN Sykkelmodell ON Sykkel.modell_id = Sykkelmodell.modell_id',
-      [serienr],
-      (error, results) => {
-        if (error) return console.error(error);
+  getBike(modell_id, success) {
+    connection.query('select * from Sykkelinformasjon', [modell_id], (error, results) => {
+      if (error) return console.error(error);
 
-        success(results[0]);
-      }
-    );
+      success(results[0]);
+    });
   }
 }
+
+//Klasser og metoder for kundelister
 
 export class Customer {
   kunde_id: number;
@@ -56,57 +56,34 @@ class CustomerService {
   }
 }
 
-// updateBike(serienr, sted_id, modellnavn, modell_id, status, success) {
-//   connection.query('update Sykkel set name=?, email=? where id=?', [name, email, id], (error, results) => {
-//     if (error) return console.error(error);
-//
-//     success();
-//   });
-// }
+//Klasser og metoder for utstyr
 
-// addBike(id, name, email, success) {
-//   connection.query('insert into Bikes (name, email) values (?,?)', [name, email, id], (error, results) => {
-//     if (error) return console.error(error);
-//
-//     success();
-//   });
-// }
-// }
-//
-// //fag
-//
-// class SubjectService {
-//   getSubjects(success) {
-//     connection.query('select * from Subjects', (error, results) => {
-//       if (error) return console.error(error);
-//
-//       success(results);
-//     });
-//   }
-//
-//   getSubject(id, success) {
-//     connection.query('select * from Subjects where id=?', [id], (error, results) => {
-//       if (error) return console.error(error);
-//
-//       success(results[0]);
-//     });
-//   }
-//
-//   updateSubject(id, name, code, success) {
-//     connection.query('update Subjects set name=?, code=? where id=?', [name, code, id], (error, results) => {
-//       if (error) return console.error(error);
-//
-//       success();
-//     });
-//   }
-//   addSubject(id, name, code, success) {
-//     connection.query('insert into Subjects (name, code) values (?,?)', [name, code, id], (error, results) => {
-//       if (error) return console.error(error);
-//
-//       success();
-//     });
-//   }
-// }
+export class Eqpt {
+  utstyr_id: number;
+  utstyr_type: string = '';
+  utstyr_navn: string = '';
+  pris: number;
+}
+
+class EqptService {
+  getEqpts(success: (Eqpt[]) => mixed) {
+    connection.query('select * from Utstyr', (error: ?Error, results: Eqpt[]) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  getEqpt(utstyr_id, success) {
+    connection.query('select * from Utstyr where utstyr_id=?', [utstyr_id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results[0]);
+    });
+  }
+}
+
 export let bikeService = new BikeService();
 export let customerService = new CustomerService();
+export let eqptService = new EqptService();
 // export let subjectService = new SubjectService();
