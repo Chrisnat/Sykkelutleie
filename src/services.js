@@ -83,7 +83,36 @@ class EqptService {
   }
 }
 
+//sted
+export class Town {
+  sted_id: number;
+  stednavn: string = '';
+  navn: string = '';
+}
+
+class TownService {
+  getTowns(success: (Town[]) => mixed) {
+    connection.query('select * from Sted', (error: ?Error, results: Town[]) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  getTown(sted_id, success) {
+    connection.query(
+      'select stednavn, navn from Sted, Omraade where Sted.omraade_id = Omraade.omraade_id',
+      [sted_id],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results[0]);
+      }
+    );
+  }
+}
+
 export let bikeService = new BikeService();
 export let customerService = new CustomerService();
 export let eqptService = new EqptService();
-// export let subjectService = new SubjectService();
+export let townService = new TownService();

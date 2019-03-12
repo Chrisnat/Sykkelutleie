@@ -8,6 +8,7 @@ import { Bike, bikeService } from './services';
 import { Card, List, Row, Column, NavBar, Button, Form } from './widgets';
 import { CustomerList, CustomerDetails } from './kundeliste';
 import { EqptList, EqptDetails } from './utstyr';
+import { TownList, TownDetails } from './sted';
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
@@ -19,6 +20,7 @@ class Menu extends Component {
         <NavBar.Link to="/bikes">Sykler</NavBar.Link>
         <NavBar.Link to="/customers">Kunder</NavBar.Link>
         <NavBar.Link to="/eqpts">Utstyr</NavBar.Link>
+        <NavBar.Link to="/towns">Utleiested</NavBar.Link>
       </NavBar>
     );
   }
@@ -100,6 +102,8 @@ if (root)
           <Route exact path="/customers/:kunde_id" component={CustomerDetails} />
           <Route exact path="/eqpts" component={EqptList} />
           <Route exact path="/eqpts/:utstyr_id" component={EqptDetails} />
+          <Route exact path="/towns" component={TownList} />
+          <Route exact path="/towns/:sted_id" component={TownDetails} />
         </div>
       </HashRouter>
     </div>,
