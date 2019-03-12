@@ -17,13 +17,45 @@ class BikeService {
   }
 
   getBike(serienr, success) {
-    connection.query('select * from Sykkel where serienr=?', [serienr], (error, results) => {
+    connection.query(
+      'SELECT * FROM Sykkel JOIN Sykkelmodell ON Sykkel.modell_id = Sykkelmodell.modell_id',
+      [serienr],
+      (error, results) => {
+        if (error) return console.error(error);
+
+        success(results[0]);
+      }
+    );
+  }
+}
+
+export class Customer {
+  kunde_id: number;
+  fornavn: string = '';
+  etternavn: string = '';
+  adresse: number;
+  postnr: number;
+  epost: string = '';
+  tlf: number;
+}
+class CustomerService {
+  getCustomers(success: (Customer[]) => mixed) {
+    connection.query('select * from Kunde', (error: ?Error, results: Customer[]) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  getCustomer(kunde_id, success) {
+    connection.query('select * from Kunde where kunde_id=?', [kunde_id], (error, results) => {
       if (error) return console.error(error);
 
       success(results[0]);
     });
   }
 }
+
 // updateBike(serienr, sted_id, modellnavn, modell_id, status, success) {
 //   connection.query('update Sykkel set name=?, email=? where id=?', [name, email, id], (error, results) => {
 //     if (error) return console.error(error);
@@ -76,4 +108,5 @@ class BikeService {
 //   }
 // }
 export let bikeService = new BikeService();
+export let customerService = new CustomerService();
 // export let subjectService = new SubjectService();

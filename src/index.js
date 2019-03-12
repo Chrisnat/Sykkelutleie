@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { NavLink, HashRouter, Route } from 'react-router-dom';
 import { Bike, bikeService } from './services';
 import { Card, List, Row, Column, NavBar, Button, Form } from './widgets';
+import { CustomerList, CustomerDetails } from './kundeliste';
 
 import createHashHistory from 'history/createHashHistory';
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
@@ -15,6 +16,7 @@ class Menu extends Component {
     return (
       <NavBar brand="AS Sykkelutleie">
         <NavBar.Link to="/bikes">Sykler</NavBar.Link>
+        <NavBar.Link to="/customers">Kunder</NavBar.Link>
       </NavBar>
     );
   }
@@ -56,7 +58,7 @@ class BikeDetails extends Component<{ match: { params: { serienr: number } } }> 
   render() {
     return (
       <div>
-        <Card title="Sykkelinfo">
+        <Card title="Detaljer">
           <Row>
             <Column width={2}>Navn:</Column>
             <Column>{this.bike.modellnavn}</Column>
@@ -138,6 +140,8 @@ if (root)
           <Route exact path="/" component={Home} />
           <Route exact path="/bikes" component={BikeList} />
           <Route exact path="/bikes/:serienr" component={BikeDetails} />
+          <Route exact path="/customers" component={CustomerList} />
+          <Route exact path="/customers/:kunde_id" component={CustomerDetails} />
         </div>
       </HashRouter>
     </div>,
