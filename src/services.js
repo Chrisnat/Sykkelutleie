@@ -2,12 +2,7 @@ import { connection } from './mysql_connection';
 
 //Klasser og metoder for Sykler
 
-export class Bike {
-  serienr: number;
-  modellnavn: string = '';
-  type: string = '';
-  sted_id: number;
-}
+export class Bike {}
 
 class BikeService {
   getBikes(success: (Bike[]) => mixed) {
@@ -29,15 +24,7 @@ class BikeService {
 
 //Klasser og metoder for kundelister
 
-export class Customer {
-  kunde_id: number;
-  fornavn: string = '';
-  etternavn: string = '';
-  adresse: number;
-  postnr: number;
-  epost: string = '';
-  tlf: number;
-}
+export class Customer {}
 class CustomerService {
   getCustomers(success: (Customer[]) => mixed) {
     connection.query('select * from Kunde', (error: ?Error, results: Customer[]) => {
@@ -58,12 +45,7 @@ class CustomerService {
 
 //Klasser og metoder for utstyr
 
-export class Eqpt {
-  utstyr_id: number;
-  utstyr_type: string = '';
-  utstyr_navn: string = '';
-  pris: number;
-}
+export class Eqpt {}
 
 class EqptService {
   getEqpts(success: (Eqpt[]) => mixed) {
@@ -84,11 +66,7 @@ class EqptService {
 }
 
 //sted
-export class Town {
-  sted_id: number;
-  stednavn: string = '';
-  navn: string = '';
-}
+export class Town {}
 
 class TownService {
   getTowns(success: (Town[]) => mixed) {
@@ -99,10 +77,10 @@ class TownService {
     });
   }
 
-  getTown(sted_id, success) {
+  getTown(omraade_id, success) {
     connection.query(
       'select stednavn, navn from Sted, Omraade where Sted.omraade_id = Omraade.omraade_id',
-      [sted_id],
+      [omraade_id],
       (error, results) => {
         if (error) return console.error(error);
 
@@ -112,7 +90,30 @@ class TownService {
   }
 }
 
+//bookinglister
+
+export class Booking {}
+
+class BookingService {
+  getBookings(success: (Booking[]) => mixed) {
+    connection.query('select * from Booking', (error: ?Error, results: Booking[]) => {
+      if (error) return console.error(error);
+
+      success(results);
+    });
+  }
+
+  getBooking(booking_id, success) {
+    connection.query('select * from Bookinginfo', [booking_id], (error, results) => {
+      if (error) return console.error(error);
+
+      success(results[0]);
+    });
+  }
+}
+
 export let bikeService = new BikeService();
 export let customerService = new CustomerService();
 export let eqptService = new EqptService();
 export let townService = new TownService();
+export let bookingService = new BookingService();

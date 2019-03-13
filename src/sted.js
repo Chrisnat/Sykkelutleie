@@ -1,3 +1,5 @@
+// @flow
+
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import ReactDOM from 'react-dom';
@@ -32,7 +34,7 @@ export class TownList extends Component {
   }
 }
 
-export class TownDetails extends Component<{ match: { params: { sted_id: number } } }> {
+export class TownDetails extends Component<{ match: { params: { omraade_id: number } } }> {
   town = new Town();
 
   render() {
@@ -53,7 +55,7 @@ export class TownDetails extends Component<{ match: { params: { sted_id: number 
     );
   }
   mounted() {
-    townService.getTown(this.props.match.params.sted_id, town => {
+    townService.getTown(this.props.match.params.omraade_id, town => {
       this.town = town;
     });
   }
