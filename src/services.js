@@ -96,7 +96,7 @@ export class Booking {}
 
 class BookingService {
   getBookings(success: (Booking[]) => mixed) {
-    connection.query('select * from Booking', (error: ?Error, results: Booking[]) => {
+    connection.query('select * from Bookinginfo', (error: ?Error, results: Booking[]) => {
       if (error) return console.error(error);
 
       success(results);
